@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EE07373D-7D13-4DF6-AAC3-127B5C46128D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HttpTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3412FADC8DC17FE521737D4EC0838016B650F197</key>
+		<string>https://github.com/yostos/HttpTest.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HttpTest.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3412FADC8DC17FE521737D4EC0838016B650F197</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/yostos/HttpTest.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3412FADC8DC17FE521737D4EC0838016B650F197</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3412FADC8DC17FE521737D4EC0838016B650F197</string>
+			<key>IDESourceControlWCCName</key>
+			<string>HttpTest</string>
+		</dict>
+	</array>
+</dict>
+</plist>
