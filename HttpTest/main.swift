@@ -31,7 +31,8 @@ let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: ni
 
 let string:NSString = NSString(data: data!,encoding: NSUTF8StringEncoding)!
 
-let array:NSArray = string.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "¥r"))
+//let array:NSArray = string.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "¥r"))
+let array:NSArray = string.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
 
 var i:Int = 0
 for item in array {
