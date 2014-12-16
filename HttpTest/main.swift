@@ -30,4 +30,18 @@ var request = NSURLRequest(URL: NSURL(string: "http://bluepages.ibm.com/BpHttpAp
 let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
 
 let string:NSString = NSString(data: data!,encoding: NSUTF8StringEncoding)!
-println(string)
+
+let array:NSArray = string.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "¥r"))
+
+var i:Int = 0
+for item in array {
+    i++
+    println(i)
+    println(item)
+}
+
+println(array[0])
+print("Totla record count =")
+println (i)
+
+
