@@ -9,4 +9,14 @@
 import Foundation
 
 println("Hello, World!")
-
+var request = NSURLRequest(URL: NSURL(string: "http://bluepages.ibm.com/BpHttpApisv3/wsapi?bySerial=096826")!)
+var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
+if data == nil {
+    println("No Data Found")
+}
+else {
+    println(data)
+  //  var string:NSString!
+  //  string = init(data: data,encoding: NSUTF8StringEncoding)
+    
+ }
