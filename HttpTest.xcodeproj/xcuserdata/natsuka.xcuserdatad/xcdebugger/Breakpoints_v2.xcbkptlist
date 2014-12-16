@@ -9,12 +9,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HttpTest/main.swift"
-            timestampString = "440412655.401123"
+            filePath = "HttpTest/BluepageLookuper.swift"
+            timestampString = "440413502.578124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56">
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "BluepageLookuper"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

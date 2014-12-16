@@ -24,6 +24,6 @@ class Employee : NSObject {
     var floor : NSString = ""
     var userid : NSString = ""
     var empcc : NSString = ""
-    
+
 }
 
