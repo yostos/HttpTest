@@ -11,6 +11,8 @@ class BluepageLookuper : NSObject {
     
     func setLookupCondition(condition:BluepageLookupCondition) {
         
+        
+        
     }
     
     

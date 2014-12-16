@@ -10,9 +10,20 @@ import Foundation
 
 class Employee : NSObject {
     
-    var name : NSString="init"
-    var serial : NSString="init"
-    var dept : NSString = "init"
+    var cnum : NSString=""
+    var name : NSString=""
+    var empno : NSString=""
+    var dept : NSString = ""
+    var building : NSString = ""
+    var emptype : NSString = ""
+    var flagManager : NSString = ""
+    var tie : NSString = ""
+    var xphone : NSString = ""
+    var fax : NSString = ""
+    var imad : NSString = ""
+    var floor : NSString = ""
+    var userid : NSString = ""
+    var empcc : NSString = ""
     
 }
 
