@@ -9,9 +9,6 @@
 import Foundation
 
 
-
-import Foundation
-
 let arr = [
     0xe3, 0x81, 0x82,
     0xe3, 0x81, 0x84,
@@ -34,11 +31,35 @@ let string:NSString = NSString(data: data!,encoding: NSUTF8StringEncoding)!
 //let array:NSArray = string.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "¥r"))
 let array:NSArray = string.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
 
+
+var employeeList:[Employee] = []
+
 var i:Int = 0
+var employee: Employee = Employee()
+
 for item in array {
     i++
-    println(i)
-    println(item)
+    var array2:NSArray = item.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    if array2[0] as NSString == "CNUM:" {
+        
+        if i>1 {
+            employeeList.append(employee)
+        }
+        
+        employee = Employee()
+        if array2.count == 2 {
+            employee.serial = array2[1] as NSString
+        }
+        else {
+            employee.serial = ""
+        }
+    }
+    
+    println(array2[0])
+    if array2.count == 2 {
+        println(array2[1])
+    }
+    
 }
 
 println(array[0])

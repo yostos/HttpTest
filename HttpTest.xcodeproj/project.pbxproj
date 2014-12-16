@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F49798B11A3FFD0200C7AB12 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49798B01A3FFD0200C7AB12 /* Employee.swift */; };
+		F49798B31A40008600C7AB12 /* BluepageLookuper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49798B21A40008600C7AB12 /* BluepageLookuper.swift */; };
+		F49798B51A4000C000C7AB12 /* BluepageLookupCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49798B41A4000C000C7AB12 /* BluepageLookupCondition.swift */; };
 		F4E3DE641A3F2CE1005258C2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E3DE631A3F2CE1005258C2 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +26,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F49798B01A3FFD0200C7AB12 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		F49798B21A40008600C7AB12 /* BluepageLookuper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluepageLookuper.swift; sourceTree = "<group>"; };
+		F49798B41A4000C000C7AB12 /* BluepageLookupCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluepageLookupCondition.swift; sourceTree = "<group>"; };
 		F4E3DE601A3F2CE1005258C2 /* HttpTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HttpTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4E3DE631A3F2CE1005258C2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				F4E3DE631A3F2CE1005258C2 /* main.swift */,
+				F49798B21A40008600C7AB12 /* BluepageLookuper.swift */,
+				F49798B01A3FFD0200C7AB12 /* Employee.swift */,
+				F49798B41A4000C000C7AB12 /* BluepageLookupCondition.swift */,
 			);
 			path = HttpTest;
 			sourceTree = "<group>";
@@ -119,6 +128,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4E3DE641A3F2CE1005258C2 /* main.swift in Sources */,
+				F49798B11A3FFD0200C7AB12 /* Employee.swift in Sources */,
+				F49798B51A4000C000C7AB12 /* BluepageLookupCondition.swift in Sources */,
+				F49798B31A40008600C7AB12 /* BluepageLookuper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +245,7 @@
 				F4E3DE691A3F2CE1005258C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
