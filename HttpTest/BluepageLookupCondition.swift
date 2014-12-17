@@ -19,12 +19,11 @@ class BluepageLookupCondition : NSObject {
     var noteId : NSString?
     var shortName : NSString?
     var tel : NSString?
-    var IsManager : Bool
+    var IsManager : Bool?
     
     
     override init() {
 
-        self.IsManager = false
         self.name = nil
         self.building = nil
         self.dept = nil
@@ -32,19 +31,49 @@ class BluepageLookupCondition : NSObject {
         self.noteId  = nil
         self.shortName  = nil
         self.tel  = nil
-        self.IsManager = false
+        self.IsManager = nil
         super.init()
     }
     
     func clear() {
-        self.IsManager = false
-        self.name = nil
+                self.name = nil
         self.building = nil
         self.dept = nil
         self.empno = nil
         self.noteId  = nil
         self.shortName  = nil
         self.tel  = nil
-        self.IsManager = false
+        self.IsManager = nil
+    }
+    
+    func setName(aname : NSString){
+        self.name = aname
+    }
+
+    func setBuilding(abuilding : NSString){
+        self.building = abuilding
+    }
+
+    func setDept(adept : NSString){
+        self.dept = adept
+    }
+    
+    func setEmpno(aempno : NSString){
+        self.empno = aempno
+    }
+    func setNoteid(anoteid : NSString){
+        self.noteId = anoteid
+    }
+    
+    func setShortname(ashortname : NSString){
+        self.shortName = ashortname
+    }
+    
+    func setTel(atel : NSString){
+        self.tel = atel
+    }
+    
+    func setMgrflg(amfrflg : Bool){
+        self.IsManager = true
     }
 }
