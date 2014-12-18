@@ -35,25 +35,23 @@ class BluepageLookuper : NSObject {
         var api_url : NSString = ""
         
         //SLAPHAPIのURLを取得
-        for url in bpApiRecords {
-            //コロン":"をDelimitorとして、各レコードの項目名と項目情報を分離する。
-            let bpApiData:NSArray = url.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString:":"))
-            var key : NSString = bpApiData[0] as NSString
-            var value : NSString = bpApiData[1] as NSString
-            if (bpApiData.count == 2){
+        for line in bpApiRecords {
+            let r : NSRange = line.rangeOfString(":")
+            let loc = r.location
+            if (loc != NSNotFound) {
+                //文字列の位置を取得して、前後に分割
+                let key : NSString = (line as NSString).substringToIndex(loc)           // :前の文字列
+                let value : NSString = (line as NSString).substringFromIndex(loc + 2)   // :以降の文字列
                 if( key == "NAME"){
-                    if (value == " SLAPHAPI"){
-                        NSLog("PASS")
+                    if (value == "SLAPHAPI"){
                         flg_slaphapi = true
                     }
-                }
-            }else if(bpApiData.count == 3){
-                var urlbody : NSString = bpApiData[2] as NSString
-                if(key == "URL") && (flg_slaphapi == true){
-                    api_url = "http:" + urlbody
+                }else if (key == "URL") && (flg_slaphapi == true){
+                    api_url = value
                     break;
                 }
             }
+            
         }
         return api_url
     }
@@ -66,7 +64,7 @@ class BluepageLookuper : NSObject {
         let OBJ : NSString = "ibmperson/"
         let str1 : NSString = "(&"
         let str2 : NSString = ").list,printable/bytext"
-        let str3 : NSString = "?serialnumber&cn&ibmserialnumber&dept&buildingname&employeetype&ismanager&telephonenumber&internalmaildrop&floor&mail&primaryuserid&manager&managerserialnumber&employeecountrycode&nativeFirstName&nativeLastName"
+        let str3 : NSString = "?serialnumber&cn&ibmserialnumber&dept&buildingname&employeetype&ismanager&telephonenumber&internalmaildrop&floor&mail&primaryuserid&manager&managerserialnumber&employeecountrycode&nativeFirstName&nativeLastName&mobile&tieline&notesemail"
         var SEARCH_PARAMATER : String = ""
         var allURL : String = ""
         
@@ -75,16 +73,15 @@ class BluepageLookuper : NSObject {
         let dept : NSString = "(dept=*"
         let serialnumber : NSString = "(ibmserialnumber=*"
         let building : NSString = "(buildingname="
-        let notesid : NSString = "(mail=*"
+        let notesid : NSString = "(notesemail=*"
         let notesshort : NSString = "(primaryuserid=*"
         let telephone : NSString = "(telephonenumber=*"
         let ismgr : NSString = "(ismanager="
         let country : NSString = "(employeecountrycode=*"
         
         //検索条件のをURLエンコードして結合
-        //Todo 検索項目にスペースが入力された場合のハンドリング
+        //Todo 検索項目にスペースが入力された場合のハンドリング →UI側で実装済み＆あいまい検索可能
         if (lookupCondition.name? != nil) {
-            NSLog("Passssssssss")
             let nameString : String = lookupCondition.name as String
             let encodedName = nameString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += name
@@ -139,7 +136,7 @@ class BluepageLookuper : NSObject {
             allURL += "\(SLAPHAPI_URL)\(OBJ)\(str1)\(SEARCH_PARAMATER)\(str2)\(str3)"
         }
         
-        NSLog(allURL + "---------")
+        NSLog(allURL)
         
         // 通信してデータを取得
         var request = NSURLRequest(URL: NSURL(string: allURL)!)
@@ -148,6 +145,8 @@ class BluepageLookuper : NSObject {
         //Stringに変換して、配列に格納
         let employeeStreamString:NSString = NSString(data: data!,encoding: NSUTF8StringEncoding)!
         let employeeRecords:NSArray = employeeStreamString.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        
+        //Todo 0 レコードの場合のアクションを入れる
         
         var employeeList:[Employee] = []
         var no_of_emp : Int = 0
@@ -158,6 +157,7 @@ class BluepageLookuper : NSObject {
             let employeeData:NSArray = item.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString:":"))
             
             if employeeData.count == 2 {
+                
                 if employeeData[0] as NSString == "dn" {
                     // 最初のレコードは空なので配列には入れない。
                     if no_of_emp != 0 {
@@ -183,28 +183,42 @@ class BluepageLookuper : NSObject {
                     employee.emptype = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "ismanager") {
                     employee.flagManager = employeeData[1] as NSString
-                    //}else if(employeeData[0] as NSString == "TIE") {
-                    //    employee.tie = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "telephonenumber") {
                     employee.phone = employeeData[1] as NSString
-                    //}else if(employeeData[0] as NSString == "FAX") {
-                    //    employee.fax = employeeData[1] as NSString
+                }else if(employeeData[0] as NSString == "FAX") {
+                        employee.fax = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "internalmaildrop"){
                     employee.imad = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "floor") {
                     employee.floor = employeeData[1] as NSString
-                }else if(employeeData[0] as NSString == "mail") {
+                }else if(employeeData[0] as NSString == "notesemail") {
                     employee.userid = employeeData[1] as NSString
+                    
                 }else if(employeeData[0] as NSString == "employeecountrycode") {
                     employee.empcc = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "primaryuserid") {
                     employee.priuserid = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "managerserialnumber") {
                     employee.mgrcnum = employeeData[1] as NSString
+                }else if(employeeData[0] as NSString == "mobile") {
+                    employee.mobile = employeeData[1] as NSString
+                }else if(employeeData[0] as NSString == "tieline") {
+                    employee.tie = employeeData[1] as NSString
                 }else{
                     //do nothing
                 }
-                
+            //ネイティブ言語だけ、":"が一つ多いので配列が３つになる
+            }else if (employeeData.count == 3) {
+                if(employeeData[0] as NSString == "nativeFirstName") {
+                    
+                    
+                }else if (employeeData[0] as NSString == "nativeLastName") {
+                    // Todo nil問題が解決しません。。
+//                    var base64LN = employeeData[2] as NSString
+//                    var dataLN = NSData(base64EncodedString: base64LN, options: .allZeros)
+//                    var encodedLN = NSString(data: dataLN!, encoding: NSUTF8StringEncoding)
+//                    NSLog(encodedLN!)
+                }
             }
             
         }
@@ -215,3 +229,4 @@ class BluepageLookuper : NSObject {
     
     
 }
+

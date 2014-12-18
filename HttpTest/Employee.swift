@@ -18,11 +18,12 @@ class Employee : NSObject {
     var emptype : NSString = ""
     var flagManager : NSString = ""
     var tie : NSString = ""
+    var mobile : NSString = ""
     var phone : NSString = ""
     var fax : NSString = ""
     var imad : NSString = ""
     var floor : NSString = ""
-    var userid : NSString = ""
+    var userid : NSString = ""  //To Do Natsuka Sumi/IMBJP/ みたいなやつのこと。作らなくてはいけない
     var priuserid : NSString = ""
     var empcc : NSString = ""
     var mgrcnum : NSString = ""
