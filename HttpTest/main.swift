@@ -13,12 +13,12 @@ var bluepageLookuper:BluepageLookuper=BluepageLookuper()
 var bluepageLookupCondition:BluepageLookupCondition = BluepageLookupCondition()
 
 // test
-bluepageLookupCondition.setName("Wataru", name2: "Minamimura")
+//bluepageLookupCondition.setName("Wataru", name2: "Minamimura")
 //bluepageLookupCondition.setDept("7A500")
 //bluepageLookupCondition.setTel("")
-bluepageLookupCondition.setBuilding("HZ")
+//bluepageLookupCondition.setBuilding("HZ")
 //bluepageLookupCondition.setEmpno("351395")
-//bluepageLookupCondition.setNoteid("Natsuka Sumi")
+bluepageLookupCondition.setNoteid("CN=Natsuka Sumi/OU=Japan/O=IBM@IBMJP")
 //bluepageLookupCondition.setShortname("NATSU74")
 //bluepageLookupCondition.setMgrflg()
 

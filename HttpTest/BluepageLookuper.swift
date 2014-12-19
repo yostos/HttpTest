@@ -72,20 +72,19 @@ class BluepageLookuper : NSObject {
         var e : Bool = lookupCondition.name.isEmpty
         var name = ""
         let dept : NSString = "(dept=*"
-        let serialnumber : NSString = "(ibmserialnumber=*"
+        let serialnumber : NSString = "(ibmserialnumber="
         let building : NSString = "(buildingname="
-        let notesid : NSString = "(notesemail=*"
-        let notesshort : NSString = "(primaryuserid=*"
-        let telephone : NSString = "(telephonenumber=*"
+        let notesid : NSString = "(notesemail="
+        let notesshort : NSString = "(primaryuserid="
+        let telephone : NSString = "(telephonenumber="
         let ismgr : NSString = "(ismanager="
         let country : NSString = "(employeecountrycode=*"
         
         //検索条件のをURLエンコードして結合
-        if (false == e) {
+        if (false == e && (lookupCondition.name[0] != "" && lookupCondition.name[1] != "")) {
+
             let name1String : String = lookupCondition.name[0] as String
             let name2String : String = lookupCondition.name[1] as String
-            
-            NSLog(name1String + "," + name2String)
             
             if (name1String != "" && name2String != ""){
                 name = "(|(cn=" + name1String + " " + name2String + ")(cn=" + name2String + " " + name1String + ")"
