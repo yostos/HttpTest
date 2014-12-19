@@ -12,7 +12,7 @@ class BluepageLookupCondition : NSObject {
     // These fields are key for looking up Bluepages
     // 'nil' means that the key is not speciflied.
     
-    var name : NSString?
+    var name : [NSString]
     var building : NSString?
     var dept : NSString?
     var empno : NSString?
@@ -24,7 +24,7 @@ class BluepageLookupCondition : NSObject {
     
     override init() {
 
-        self.name = nil
+        self.name = [NSString] (count : 2, repeatedValue : "" )
         self.building = nil
         self.dept = nil
         self.empno = nil
@@ -36,7 +36,7 @@ class BluepageLookupCondition : NSObject {
     }
     
     func clear() {
-                self.name = nil
+        self.name = [NSString] (count : 2, repeatedValue : "" )
         self.building = nil
         self.dept = nil
         self.empno = nil
@@ -46,8 +46,9 @@ class BluepageLookupCondition : NSObject {
         self.IsManager = nil
     }
     
-    func setName(aname : NSString){
-        self.name = aname
+    func setName(name1: NSString, name2: NSString){
+        name[0] = name1
+        name[1] = name2
     }
 
     func setBuilding(abuilding : NSString){

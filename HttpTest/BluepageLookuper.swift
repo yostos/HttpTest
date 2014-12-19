@@ -69,7 +69,8 @@ class BluepageLookuper : NSObject {
         var allURL : String = ""
         
         //検索条件定義
-        let name : String = "(cn=*"
+        var e : Bool = lookupCondition.name.isEmpty
+        var name = ""
         let dept : NSString = "(dept=*"
         let serialnumber : NSString = "(ibmserialnumber=*"
         let building : NSString = "(buildingname="
@@ -80,53 +81,71 @@ class BluepageLookuper : NSObject {
         let country : NSString = "(employeecountrycode=*"
         
         //検索条件のをURLエンコードして結合
-        //Todo 検索項目にスペースが入力された場合のハンドリング →UI側で実装済み＆あいまい検索可能
-        if (lookupCondition.name? != nil) {
-            let nameString : String = lookupCondition.name as String
-            let encodedName = nameString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-            SEARCH_PARAMATER += name
-            SEARCH_PARAMATER += encodedName! + ")"
+        if (false == e) {
+            let name1String : String = lookupCondition.name[0] as String
+            let name2String : String = lookupCondition.name[1] as String
+            
+            NSLog(name1String + "," + name2String)
+            
+            if (name1String != "" && name2String != ""){
+                name = "(|(cn=" + name1String + " " + name2String + ")(cn=" + name2String + " " + name1String + ")"
+            }else if (name1String != "" && name2String == ""){
+                name = "(|(cn=*" + " " + name1String + ")(cn=" + name1String + " *)"
+            }else if (name1String == "" && name2String != ""){
+                name = "(|(cn=*" + " " + name2String + ")(cn=" + name2String + " *)"
+            }
+            
+            let encodedName = name.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            SEARCH_PARAMATER += encodedName!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.dept? != nil) {
             let deptString : String = lookupCondition.dept as String
             let encodedDept = deptString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += dept
-            SEARCH_PARAMATER += encodedDept! + ")"
+            SEARCH_PARAMATER += encodedDept!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.building? != nil) {
             let buildingString : String = lookupCondition.building as String
             let encodedBuilding = buildingString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += building
-            SEARCH_PARAMATER += encodedBuilding! + ")"
+            SEARCH_PARAMATER += encodedBuilding!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.empno? != nil) {
             let empnoString : String = lookupCondition.empno as String
             let encodedEmpno = empnoString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += serialnumber
-            SEARCH_PARAMATER += encodedEmpno! + ")"
+            SEARCH_PARAMATER += encodedEmpno!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.noteId? != nil) {
             let notesidString : String = lookupCondition.noteId as String
             let encodedNotesid = notesidString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += notesid
-            SEARCH_PARAMATER += encodedNotesid! + ")"
+            SEARCH_PARAMATER += encodedNotesid!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.shortName? != nil) {
             let shortnameString : String = lookupCondition.shortName as String
             let encodedShortName = shortnameString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += notesshort
-            SEARCH_PARAMATER += encodedShortName! + ")"
+            SEARCH_PARAMATER += encodedShortName!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.tel? != nil) {
             let telString : String = lookupCondition.tel as String
             let encodedTel = telString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += telephone
-            SEARCH_PARAMATER += encodedTel! + ")"
+            SEARCH_PARAMATER += encodedTel!
+            SEARCH_PARAMATER += ")"
         }
         if (lookupCondition.IsManager? != nil) {
             if (lookupCondition.IsManager? == true) {
                 SEARCH_PARAMATER += ismgr
-                SEARCH_PARAMATER += "Y" + ")"
+                SEARCH_PARAMATER += "Y"
+                SEARCH_PARAMATER += ")"
             }
         }
         
@@ -135,8 +154,7 @@ class BluepageLookuper : NSObject {
         } else {
             allURL += "\(SLAPHAPI_URL)\(OBJ)\(str1)\(SEARCH_PARAMATER)\(str2)\(str3)"
         }
-        
-        NSLog(allURL)
+
         
         // 通信してデータを取得
         var request = NSURLRequest(URL: NSURL(string: allURL)!)
