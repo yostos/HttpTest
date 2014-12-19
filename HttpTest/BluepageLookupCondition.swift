@@ -16,7 +16,10 @@ class BluepageLookupCondition : NSObject {
     var building : NSString?
     var dept : NSString?
     var empno : NSString?
-    var noteId : NSString?
+//    var noteId : NSString?
+    var notesCN : NSString?
+    var notesOU : [NSString]
+    var notesO : NSString?
     var shortName : NSString?
     var tel : NSString?
     var IsManager : Bool?
@@ -28,7 +31,10 @@ class BluepageLookupCondition : NSObject {
         self.building = nil
         self.dept = nil
         self.empno = nil
-        self.noteId  = nil
+        //self.noteId  = nil
+        self.notesCN = nil
+        self.notesOU =  [NSString] (count : 2, repeatedValue : "" )
+        self.notesO = nil
         self.shortName  = nil
         self.tel  = nil
         self.IsManager = nil
@@ -40,7 +46,10 @@ class BluepageLookupCondition : NSObject {
         self.building = nil
         self.dept = nil
         self.empno = nil
-        self.noteId  = nil
+        //self.noteId  = nil
+        self.notesCN = nil
+        self.notesOU =  [NSString] (count : 2, repeatedValue : "" )
+        self.notesO = nil
         self.shortName  = nil
         self.tel  = nil
         self.IsManager = nil
@@ -62,8 +71,22 @@ class BluepageLookupCondition : NSObject {
     func setEmpno(aempno : NSString){
         self.empno = aempno
     }
-    func setNoteid(anoteid : NSString){
-        self.noteId = anoteid
+    
+//    func setNoteid(anoteid : NSString){
+//        self.noteId = anoteid
+//    }
+
+    func setNotescn(anotescn : NSString){
+        self.notesCN = anotescn
+    }
+    
+    func setNotesOU(anotesou1 : NSString, anotesou2 : NSString){
+        self.notesOU[0] = anotesou1
+        self.notesOU[1] = anotesou2
+    }
+    
+    func setNotesO(anotesO : NSString){
+        self.notesO = anotesO
     }
     
     func setShortname(ashortname : NSString){

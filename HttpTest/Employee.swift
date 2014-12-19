@@ -29,6 +29,10 @@ class Employee : NSObject {
     var mgrcnum : NSString = ""
     var nativeFirstName : NSString = ""
     var nativeLastName : NSString = ""
+    
+    var notescn : NSString = ""
+    var ou : [NSString] = ["", ""]
+    var o : NSString = ""
 
 }
 

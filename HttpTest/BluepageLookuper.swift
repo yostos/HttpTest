@@ -18,8 +18,9 @@ class BluepageLookuper : NSObject {
         slaphApiUrl = initApiUrl(API_LOCATOR_URL)
     }
     
-    
+    //------------------------------------------------------------------------------------------------------
     // Initialize SLAPHAPI URL using API locator
+    //------------------------------------------------------------------------------------------------------
     func initApiUrl(apiLocatorUrl: NSString) -> NSString {
         
         // BluepageLookupConditionからURLを生成するロジック
@@ -51,20 +52,22 @@ class BluepageLookuper : NSObject {
                     break;
                 }
             }
-            
         }
         return api_url
     }
     
+    //------------------------------------------------------------------------------------------------------
     // Look up person information from BluePages
+    //------------------------------------------------------------------------------------------------------
     func lookup(lookupCondition:BluepageLookupCondition) -> [Employee] {
         
+        // 検索用URL　String部品
         var condition: BluepageLookupCondition = BluepageLookupCondition()
         let SLAPHAPI_URL : String = slaphApiUrl as String
         let OBJ : NSString = "ibmperson/"
         let str1 : NSString = "(&"
         let str2 : NSString = ").list,printable/bytext"
-        let str3 : NSString = "?serialnumber&cn&ibmserialnumber&dept&buildingname&employeetype&ismanager&telephonenumber&internalmaildrop&floor&mail&primaryuserid&manager&managerserialnumber&employeecountrycode&nativeFirstName&nativeLastName&mobile&tieline&notesemail"
+        let str3 : NSString = "?serialnumber&cn&ibmserialnumber&dept&buildingname&employeetype&ismanager&telephonenumber&internalmaildrop&floor&mail&primaryuserid&manager&managerserialnumber&employeecountrycode&nativeFirstName&nativeLastName&mobile&tieline&notesemail"    // 検索項目
         var SEARCH_PARAMATER : String = ""
         var allURL : String = ""
         
@@ -78,11 +81,11 @@ class BluepageLookuper : NSObject {
         let notesshort : NSString = "(primaryuserid="
         let telephone : NSString = "(telephonenumber="
         let ismgr : NSString = "(ismanager="
-        let country : NSString = "(employeecountrycode=*"
+        let country : NSString = "(employeecountrycode="
         
         //検索条件のをURLエンコードして結合
         if (false == e && (lookupCondition.name[0] != "" && lookupCondition.name[1] != "")) {
-
+            
             let name1String : String = lookupCondition.name[0] as String
             let name2String : String = lookupCondition.name[1] as String
             
@@ -119,8 +122,26 @@ class BluepageLookuper : NSObject {
             SEARCH_PARAMATER += encodedEmpno!
             SEARCH_PARAMATER += ")"
         }
-        if (lookupCondition.noteId? != nil) {
-            let notesidString : String = lookupCondition.noteId as String
+        if (lookupCondition.notesCN? != nil) {
+            let notesCNString : String = lookupCondition.notesCN!
+            let notesOString : String = lookupCondition.notesO!
+            let notesOUString1 : String = lookupCondition.notesOU[0]
+            var notesOUString2 : String = ""
+            var notesidString : String = ""
+            
+            var ouSecFlg : Bool = false
+            
+            if (lookupCondition.notesOU[1] != "") {
+                notesOUString2 = lookupCondition.notesOU[1]
+                ouSecFlg = true
+            }
+            
+            // OUが二つ設定されている人用にも作成する
+            if (!ouSecFlg) {
+                notesidString = "CN=" + notesCNString + "/OU=" + notesOUString1 + "/O=" + notesOString
+            }else {
+                notesidString = "CN=" + notesCNString + "/OU=" + notesOUString1 + "/OU=" + notesOUString2 + "/O=" + notesOString
+            }
             let encodedNotesid = notesidString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             SEARCH_PARAMATER += notesid
             SEARCH_PARAMATER += encodedNotesid!
@@ -149,11 +170,11 @@ class BluepageLookuper : NSObject {
         }
         
         if (SEARCH_PARAMATER.isEmpty){
-            // Todo 検索条件を入力してください
+            // Todo 検索条件を入力してください　；　UIで実装
         } else {
             allURL += "\(SLAPHAPI_URL)\(OBJ)\(str1)\(SEARCH_PARAMATER)\(str2)\(str3)"
         }
-
+        
         
         // 通信してデータを取得
         var request = NSURLRequest(URL: NSURL(string: allURL)!)
@@ -163,11 +184,9 @@ class BluepageLookuper : NSObject {
         let employeeStreamString:NSString = NSString(data: data!,encoding: NSUTF8StringEncoding)!
         let employeeRecords:NSArray = employeeStreamString.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
         
-        //Todo 0 レコードの場合のアクションを入れる
-        
+        //検索結果の取得
         var employeeList:[Employee] = []
         var no_of_emp : Int = 0
-        
         var employee: Employee = Employee()
         for item in employeeRecords {
             //コロン":"をDelimitorとして、各レコードの項目名と項目情報を分離する。
@@ -187,8 +206,7 @@ class BluepageLookuper : NSObject {
                 }
                 else if (employeeData[0] as NSString == "serialnumber"){
                     employee.cnum = employeeData[1] as NSString
-                }
-                else if (employeeData[0] as NSString == "ibmserialnumber") {
+                }else if (employeeData[0] as NSString == "ibmserialnumber") {
                     employee.ibmserialnumber = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "cn") {
                     employee.cn = employeeData[1] as NSString
@@ -203,14 +221,13 @@ class BluepageLookuper : NSObject {
                 }else if(employeeData[0] as NSString == "telephonenumber") {
                     employee.phone = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "FAX") {
-                        employee.fax = employeeData[1] as NSString
+                    employee.fax = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "internalmaildrop"){
                     employee.imad = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "floor") {
                     employee.floor = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "notesemail") {
                     employee.userid = employeeData[1] as NSString
-                    
                 }else if(employeeData[0] as NSString == "employeecountrycode") {
                     employee.empcc = employeeData[1] as NSString
                 }else if(employeeData[0] as NSString == "primaryuserid") {
@@ -224,17 +241,17 @@ class BluepageLookuper : NSObject {
                 }else{
                     //do nothing
                 }
-            //ネイティブ言語だけ、":"が一つ多いので配列が３つになる
+                //ネイティブ言語だけ、":"が一つ多いので配列が３つになる
             }else if (employeeData.count == 3) {
                 if(employeeData[0] as NSString == "nativeFirstName") {
                     
                     
                 }else if (employeeData[0] as NSString == "nativeLastName") {
                     // Todo nil問題が解決しません。。
-//                    var base64LN = employeeData[2] as NSString
-//                    var dataLN = NSData(base64EncodedString: base64LN, options: .allZeros)
-//                    var encodedLN = NSString(data: dataLN!, encoding: NSUTF8StringEncoding)
-//                    NSLog(encodedLN!)
+                    //                    var base64LN = employeeData[2] as NSString
+                    //                    var dataLN = NSData(base64EncodedString: base64LN, options: .allZeros)
+                    //                    var encodedLN = NSString(data: dataLN!, encoding: NSUTF8StringEncoding)
+                    //                    NSLog(encodedLN!)
                 }
             }
             

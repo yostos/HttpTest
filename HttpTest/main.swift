@@ -18,9 +18,12 @@ var bluepageLookupCondition:BluepageLookupCondition = BluepageLookupCondition()
 //bluepageLookupCondition.setTel("")
 //bluepageLookupCondition.setBuilding("HZ")
 //bluepageLookupCondition.setEmpno("351395")
-bluepageLookupCondition.setNoteid("CN=Natsuka Sumi/OU=Japan/O=IBM@IBMJP")
+//bluepageLookupCondition.setNoteid("CN=Natsuka Sumi/OU=Japan/O=IBM@IBMJP")
 //bluepageLookupCondition.setShortname("NATSU74")
 //bluepageLookupCondition.setMgrflg()
+bluepageLookupCondition.setNotescn("Natsuka Sumi")
+bluepageLookupCondition.setNotesOU("Japan", anotesou2: "")
+bluepageLookupCondition.setNotesO("IBM@IBMJP")
 
 let employeeList:[Employee] = bluepageLookuper.lookup(bluepageLookupCondition)
 
